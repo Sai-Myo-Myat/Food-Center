@@ -25,12 +25,12 @@ const CurrentTrends = () => {
              <h1 className=" md:text-4xl mb-5  font-bold text-2xl ">Current Trends</h1>
             <div className="items grid lg:grid-cols-4  md:grid-cols-3  grid-cols-2 gap-4  ">
                 {
-                    data && data.map(item => {
+                    data ? data.map(item => {
                         return (
                             <Item key={item.id} item={item}/>
                         )
-                    })
-                }
+                    }) : <span>There is No Foods Available!!!</span>
+                } 
             </div>
         </div>
     )
