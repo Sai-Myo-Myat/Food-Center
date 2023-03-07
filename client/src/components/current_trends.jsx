@@ -1,13 +1,31 @@
+import { useEffect, useState } from "react";
+
+import { getAllFoods } from "../../api/api_handler";
+
 import Item from "./item";
-import data from "../test_db.json"
+// import data from "../test_db.json"
 
 const CurrentTrends = () => {
+    const [data, setData] = useState(null)
+    useEffect(() => {
+        try {
+            (async () => {
+                const response = await getAllFoods();
+                setData(response.data)
+                console.log("response",response)
+                console.log('data',data)
+            })()
+            
+        } catch (error) {
+            console.log("error in fetching foods", error)
+        }
+    },[])
     return (
         <div className="current-trends md:w-4/5">
              <h1 className=" md:text-4xl mb-5  font-bold text-2xl ">Current Trends</h1>
             <div className="items grid lg:grid-cols-4  md:grid-cols-3  grid-cols-2 gap-4  ">
                 {
-                    data.map(item => {
+                    data && data.map(item => {
                         return (
                             <Item key={item.id} item={item}/>
                         )
