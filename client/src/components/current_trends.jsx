@@ -7,15 +7,15 @@ import Item from "./item";
 
 //redux-store
 import { useSelector,useDispatch } from "react-redux";
-import { fetchAllFoods } from "../redux";
+import { fetchAllFoods } from "../redux/slices/foodSlice";
 
 
 const CurrentTrends = () => {
-    const foods = useSelector(state => state.foods.foods)
-    console.log(foods)
     const dispatch = useDispatch()
+    const foods = useSelector(state => state.foods.foods)
+    console.log(foods,"foods")
     dispatch(fetchAllFoods())
-    console.log(foods)
+    console.log(foods,"foods")
     // const [data, setData] = useState(null)
     // useEffect(() => {
     //     try {

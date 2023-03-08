@@ -1,12 +1,13 @@
-import { createSlice, configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 
-import { getAllFoods, getFoodsByCategory } from '../../api/api_handler';
-
+import { getAllFoods, getFoodsByCategory } from '../../../api/api_handler';
 
 const FoodSlice = createSlice(
     {
         name: "Foods",
         initialState: {
+            loading: true,
+            error: null,
             foods: {}
         },
         reducers: {
@@ -16,8 +17,6 @@ const FoodSlice = createSlice(
                     console.log("type", typeof JSON.stringify(response)) 
                     console.log(state.foods, "response")
                 })
-                
-                
             },
             fetchAllFoodsByCategory: async (state,category) => {
                 const response = await getFoodsByCategory(category);
@@ -31,10 +30,4 @@ const FoodSlice = createSlice(
 
 export const {fetchAllFoods,fetchAllFoodsByCategory} = FoodSlice.actions;
 
-export const store = configureStore(
-    {
-        reducer: {
-            foods: FoodSlice.reducer
-        }
-    }
-)
+export default FoodSlice.reducer;
