@@ -7,13 +7,14 @@ import Item from "./item";
 
 //redux-store
 import { useSelector,useDispatch } from "react-redux";
-import { fetchAllFoods } from "../redux/slices/foodSlice";
-import { allFoods } from "../redux/slices/foodSlice";
+
+//selector 
+import { selectAllFoods } from "../redux/selector";
 
 
 const CurrentTrends = () => {
     
-    const data = useSelector(allFoods)
+    const data = useSelector(selectAllFoods)
     console.log(data,"data")
     return (
         <div className="current-trends md:w-4/5">

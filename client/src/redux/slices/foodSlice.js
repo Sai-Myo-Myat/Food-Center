@@ -14,13 +14,10 @@ const FoodSlice = createSlice(
         initialState,
         reducers: {
             fetchAllFoods: async state => {
-                await getAllFoods()
-                .then(response => {
-                    console.log("response data", response.data)
-                    state = {...state,foods: response.data}
-                    console.log(state.loading, "bolean")
-                    console.log("state.foods", state.foods)
-                })
+                const response = await getAllFoods()
+                state = {...state}
+                state["foods"] = response.data
+                console.log(state, "foodsssss")
             },
             fetchAllFoodsByCategory: async (state,action) => {
                 const response = await getFoodsByCategory(action.payload);
@@ -33,7 +30,5 @@ const FoodSlice = createSlice(
 )
 
 export const {fetchAllFoods,fetchAllFoodsByCategory} = FoodSlice.actions;
-
-export const allFoods = (state) => state.foods.foods
 
 export default FoodSlice.reducer;
