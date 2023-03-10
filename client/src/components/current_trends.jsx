@@ -12,26 +12,22 @@ import { fetchAllFoods } from "../redux/slices/foodSlice";
 
 const CurrentTrends = () => {
     const dispatch = useDispatch()
-    const foods = useSelector(state => state.foods.foods)
-    console.log(foods,"foods")
+    const [data, setData] = useState(null)
     dispatch(fetchAllFoods())
-    console.log(foods,"foods")
-    // const [data, setData] = useState(null)
+    const foods = useSelector(state => state.foods)
+    setData(foods)
+    console.log("foods",foods)
+   
     // useEffect(() => {
     //     try {
-    //         (async () => {
-    //             const response = await getAllFoods();
-    //             setData(response.data)
-    //             console.log("response",response)
-    //             console.log('data',data)
-    //         })()
+        
             
     //     } catch (error) {
     //         console.log("error in fetching foods", error)
     //     }
     // },[])
     return (
-        <div>testing</div>
+        <div>something</div>
         // <div className="current-trends md:w-4/5">
         //      <h1 className=" md:text-4xl mb-5  font-bold text-2xl ">Current Trends</h1>
         //     <div className="items grid lg:grid-cols-4  md:grid-cols-3  grid-cols-2 gap-4  ">
