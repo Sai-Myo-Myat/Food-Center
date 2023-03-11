@@ -31,13 +31,14 @@ def chooseCategory(request):
 @api_view(['POST'])
 def signUp(request):
     form = request.data;
+
     if (form["password"] == form["confirm_password"]):
         serializer = UsersSerializer(data = form, many=False)
         if serializer.is_valid():
             serializer.save()
     else:
-        return Response("password and confirm must be the same")
-    return Response(serializer.data);
+        return Response({"status": "error", "message": "Password and Confirm Password must be the same"})
+    return Response({"status": "success", "user": serializer.data});
 
 
 @api_view(['POST'])
@@ -45,12 +46,20 @@ def signIn(request):
     form = request.data;
     users = Users.objects.all()
     user = users.filter(email = form['email'])
-    serializer = UsersSerializer(user, many=True)
-    response = serializer.data
-    print(type(form['password']))
-    print(response['password'])
-    return Response(serializer.data)
-    if user:
-        print(user, "htis is user")
+    # serializer = UsersSerializer(user, many=True)
+    print(".................\n\n\n")
+    # response = serializer.data
+    print(".................\n\n\n")
+    print(type(dict(user)), '.....type')
+         
+    print(response, "response")
+    # if user:
+    #     print(".................\n\n\n")
+    #     print(type(serializer.data['password']))
+    #     print(type(form["password"]))
+    #     if int(serializer.data['password']) == int(form['password']):
+    #         return Response({"stauts": "success", "user": serializer.data})
+    #     else: 
+    #         return Response({"status": "error", "message": "Incorrect Password"})
        
-    return Response("There is No user with this email")
+    return Response({"status": "error",  "message": "There is no user with this email"})
