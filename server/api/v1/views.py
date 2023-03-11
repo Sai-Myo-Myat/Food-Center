@@ -1,7 +1,7 @@
 
 from rest_framework.response import Response;
 from rest_framework.decorators import api_view;
-from .models import Foods, Users;
+from .models import Foods,Users;
 from .serializer import FoodsSerializer, UsersSerializer;
 
 # Create your views here.
@@ -31,8 +31,11 @@ def chooseCategory(request):
 @api_view(['POST'])
 def signUp(request):
     form = request.data;
-
-    if (form["password"] == form["confirm_password"]):
+    users = Users.objects.all()
+    user = users.filter(email = form['email'])
+    if user:
+        return Response({"status": "error", "message": "Email already exits"})
+    elif(form["password"] == form["confirm_password"]):
         serializer = UsersSerializer(data = form, many=False)
         if serializer.is_valid():
             serializer.save()
@@ -45,21 +48,11 @@ def signUp(request):
 def signIn(request):
     form = request.data;
     users = Users.objects.all()
-    user = users.filter(email = form['email'])
-    # serializer = UsersSerializer(user, many=True)
-    print(".................\n\n\n")
-    # response = serializer.data
-    print(".................\n\n\n")
-    print(type(dict(user)), '.....type')
-         
-    print(response, "response")
-    # if user:
-    #     print(".................\n\n\n")
-    #     print(type(serializer.data['password']))
-    #     print(type(form["password"]))
-    #     if int(serializer.data['password']) == int(form['password']):
-    #         return Response({"stauts": "success", "user": serializer.data})
-    #     else: 
-    #         return Response({"status": "error", "message": "Incorrect Password"})
+    user = users.filter(email = form['email']).values()[0]
+    if user["password"] == form["password"]:
+        return Response({"status": "success", "user": user})
+    else:
+        return Response({"status": "error","message": "Incorrect password"})
+
        
     return Response({"status": "error",  "message": "There is no user with this email"})
