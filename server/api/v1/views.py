@@ -49,10 +49,11 @@ def signIn(request):
     form = request.data;
     users = Users.objects.all()
     user = users.filter(email = form['email']).values()[0]
-    if user["password"] == form["password"]:
-        return Response({"status": "success", "user": user})
-    else:
-        return Response({"status": "error","message": "Incorrect password"})
+    if user:
+        if user["password"] == form["password"]:
+            return Response({"status": "success", "user": user})
+        else:
+            return Response({"status": "error","message": "Incorrect password"})
 
        
     return Response({"status": "error",  "message": "There is no user with this email"})
